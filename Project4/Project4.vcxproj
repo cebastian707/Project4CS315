@@ -140,11 +140,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="systemInterface.cpp" />
+    <ClCompile Include="Tokenizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepGraph.hpp" />
     <ClInclude Include="GraphNode.hpp" />
     <ClInclude Include="MakeTree.hpp" />
+    <ClInclude Include="systemInterface.hpp" />
+    <ClInclude Include="Token.hpp" />
+    <ClInclude Include="Tokenizer.hpp" />
     <ClInclude Include="TreeNode.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

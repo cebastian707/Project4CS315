@@ -18,6 +18,12 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tokenizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="systemInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepGraph.hpp">
@@ -30,6 +36,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TreeNode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tokenizer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Token.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="systemInterface.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
