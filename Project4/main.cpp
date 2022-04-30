@@ -2,27 +2,32 @@
 #include<cstdlib>
 #include<fstream>
 #include "DepGraph.hpp"
+#include"Tokenizer.hpp"
 
 int main(int argc, const char* argv[]){
     std::ifstream inputstream;
 
     if (argc != 2) {
-        std::cout << "usage: " << argv[0] << " name-of-a-makefile\n";
+        std::cout << "usage: " << argv[1] << " name-of-a-makefile\n";
         exit(1);
     }
-
-
-
-
-    inputstream.open(argv[0], std::ios::in);    // open for reading
+    inputstream.open(argv[1], std::ios::in);    // open for reading
 
     if (!inputstream.is_open()) {
-        std::cout << "Unable to open " << argv[0] << ". Terminating...";
+        std::cout << "Unable to open " << argv[1] << ". Terminating...";
         exit(2);
     }
+    inputstream.close();
+    Tokenizer tokenizer(argv[1]);
+    Token token = tokenizer.gettoken();
+
+    while (!token.endofile()){
+        token.print();
+        token = tokenizer.gettoken();
+    }
+
 
     // creates a Reader and build the dependency graph using the tokens that it returns.
-    
     /*DepGraph* make = new DepGraph(argv[1]);
     make->parseDepGraph();
     if (make->isCyclic()) {
