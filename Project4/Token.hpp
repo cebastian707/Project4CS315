@@ -8,6 +8,11 @@
 
 class Token{
 public:
+	Token();
+
+
+
+
 	/// <summary>
 	/// Accepts a string as the token to parser by dephgraph
 	/// </summary>

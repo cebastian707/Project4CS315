@@ -5,6 +5,14 @@
 #include<iostream>
 #include"Token.hpp"
 
+Token::Token(){
+	_input = "";
+	_charcter = '\0';
+	_ischarcter = false;
+	_isinput = false;
+	_eof = false;
+}
+
 Token::Token(std::string in){
 	_input = in;
 	_isinput = true;
@@ -49,8 +57,8 @@ void Token::print(){
 	if (input()){
 		std::cout << inputs() << std::endl;
 	}
-	else if (charcters()){
-		std::cout << charcter() << std::endl;
+	else if (charcter()){
+		std::cout << charcters() << std::endl;
 	}
 
 	else if(endofile()){

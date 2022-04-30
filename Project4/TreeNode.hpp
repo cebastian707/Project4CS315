@@ -4,8 +4,6 @@
 #include<iostream>
 #include<string>
 #include"GraphNode.hpp"
-
-
 class TreeNode {
 public:
     TreeNode(GraphNode* nNode);
