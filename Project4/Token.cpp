@@ -62,7 +62,7 @@ void Token::print(){
 	}
 
 	else if(endofile()){
-		std::cout << _eof << std::endl;
+		std::cout << "EOF" << std::endl;
 	}
 
 	else{

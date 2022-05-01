@@ -27,6 +27,12 @@
     <ClCompile Include="Token.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TreeNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MakeTree.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepGraph.hpp">

@@ -140,9 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MakeTree.cpp" />
     <ClCompile Include="systemInterface.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="Tokenizer.cpp" />
+    <ClCompile Include="TreeNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepGraph.hpp" />

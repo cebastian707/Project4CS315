@@ -9,10 +9,15 @@
 #include<fstream>
 class Tokenizer{
 public:
+	/// @brief intialize the Makefile to be open
+	/// @param inputfile 
 	explicit Tokenizer(const std::string& inputfile);
+	/// @brief token function
+	/// @returns tokens of the makefile
 	Token gettoken();
 
 private:
+	/// @brief variables of the Tokenizer
 	std::string inputFileName;
 	std::fstream inputStream;
 };

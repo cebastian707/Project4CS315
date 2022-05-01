@@ -8,11 +8,8 @@
 
 class Token{
 public:
+	/// @brief basic constructor
 	Token();
-
-
-
-
 	/// <summary>
 	/// Accepts a string as the token to parser by dephgraph
 	/// </summary>
