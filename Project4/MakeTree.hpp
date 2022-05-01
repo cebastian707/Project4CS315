@@ -4,7 +4,6 @@
 #include<iostream>
 #include<string>
 #include "TreeNode.hpp"
-
 class MakeTree {
 public:
     /// @brief contruct for the class
@@ -19,8 +18,8 @@ public:
     /// @brief prints the tree using in-order traversal
     void print() { print(_root); }   // print the tree using in-order traversal
     /// @brief gets the root
-    /// @returns root 
-    TreeNode* getRoot() { return _root; }
+    /// @returns root of the bst
+    TreeNode* getRoot() {return _root;}
 private:
     /// @brief inserts elements into the graph node and bst
     /// @param tNode 

@@ -21,12 +21,11 @@ GraphNode* MakeTree::find(std::string name){
 			temp = temp->left();
 		}
 	}
-
 	return nullptr;
 }
 
 TreeNode* MakeTree::insert(TreeNode* tNode, GraphNode* nNode){
-	if (tNode == nullptr && nNode == nullptr)
+	if (nNode == nullptr)
 		return new TreeNode(nNode);
 	
 	return nullptr;
@@ -36,6 +35,6 @@ void MakeTree::print(TreeNode* root){
 	if (root == nullptr)
 		return;
 	print(root->left());
-	std::cout << root->graphNode() << std::endl;
+	root->print();
 	print(root->right());
 }
