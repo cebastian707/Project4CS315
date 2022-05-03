@@ -10,49 +10,38 @@ class Token{
 public:
 	/// @brief basic constructor
 	Token();
-	/// <summary>
-	/// Accepts a string as the token to parser by dephgraph
-	/// </summary>
-	/// <param name="in"></param>
+	/// @brief Accepts a string as the token to parser by dephgraph
+	/// @param in 
 	Token(std::string in);
-	/// <summary>
-	///Accepts a char to be parser by the dephgraph
-	/// </summary>
-	/// <param name="c"></param>
+
+	/// @brief Accepts a char to be parser by the dephgraph
+	/// @param c 
 	Token(char c);
-	/// <summary>
-	/// returns true if token is a colon
-	/// </summary>
-	/// <returns></returns>
+	
+	/// @brief 
+	/// @returns true if token is a colon 
 	bool charcter();
-	/// <summary>
-	/// returns true of input is some type of string
-	/// </summary>
-	/// <returns></returns>
+
+	/// @brief 
+	/// @returns true of input is some type of string
 	bool input();
-	/// <summary>
-	/// returns string token
-	/// </summary>
-	/// <returns></returns>
+
+	/// @brief 
+	/// @returns string token 
 	std::string inputs();
-	/// <summary>
-	/// retursn char token
-	/// </summary>
-	/// <returns></returns>
+	
+	/// @brief 
+	/// @returns char token
 	char charcters();
-	/// <summary>
-	/// end of file token
-	/// </summary>
+	
+	/// @brief end of file token
 	void eof();
-	/// <summary>
-	/// returns eof == true ive we reached endoffile
-	/// </summary>
-	/// <returns></returns>
+	
+	/// @brief 
+	/// @ returns eof  true ive we reached endoffile
 	bool endofile();
 
-	/// <summary>
-	/// prints the tokens
-	/// </summary>
+	/// @brief prints the tokens
 	void print();
 private:
 	/// @brief variables of the token class
