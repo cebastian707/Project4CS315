@@ -1,5 +1,16 @@
 #include"GraphNode.hpp"
 
+
+GraphNode::GraphNode(std::string name){
+	_name = name;
+	_command = "";
+	_timestamp = 0;
+	_onPath = false;
+	_isATarget = false;
+	_wasMade = false;
+	_listOfDependentNodes = new std::vector<GraphNode*>();
+}
+
 std::string GraphNode::getName(){
 	return _name;
 }
@@ -26,6 +37,9 @@ void GraphNode::setCommand(std::string cmnd){
 
 std::string GraphNode::getCommand(){
 	return _command;
+}
+
+void GraphNode::runCommand(){
 }
 
 void GraphNode::addDependentNode(GraphNode* child){
@@ -61,5 +75,9 @@ int GraphNode::numDependentNodes(){
 }
 
 void GraphNode::print(){
-	std::cout << _name << std::endl;
+	std::cout << _name << " : ";
+	for (size_t i = 0; i < _listOfDependentNodes->size(); i++) {
+		std::cout << _listOfDependentNodes->at(i) << std::endl;
+	}
+	std::cout << "          " << _command << std::endl;
 }

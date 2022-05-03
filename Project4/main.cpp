@@ -18,6 +18,8 @@ int main(int argc, const char* argv[]){
         exit(2);
     }
     inputstream.close();
+
+    /*
     Tokenizer tokenizer(argv[1]);
     Token token = tokenizer.gettoken();
 
@@ -25,17 +27,17 @@ int main(int argc, const char* argv[]){
         token.print();
         token = tokenizer.gettoken();
     }
-
+    */
 
     // creates a Reader and build the dependency graph using the tokens that it returns.
-    /*DepGraph* make = new DepGraph(argv[1]);
+    DepGraph* make = new DepGraph(argv[1]);
     make->parseDepGraph();
     if (make->isCyclic()) {
         std::cerr << "Input graph has cycles.\n";
         exit(1);
     }
     make->runMake();
-    */
+   
     return 0;
 }
 //exit(2) couldnt open file

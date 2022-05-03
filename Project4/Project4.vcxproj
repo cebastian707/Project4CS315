@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DepGraph.cpp" />
     <ClCompile Include="GraphNode.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MakeTree.cpp" />

@@ -40,10 +40,5 @@ Token Tokenizer::gettoken() {
 			Token token(c);
 			return token;
 		}
-
-	
-	
-	
-
 }
 //exit(4) file not open

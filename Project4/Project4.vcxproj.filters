@@ -36,6 +36,9 @@
     <ClCompile Include="GraphNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DepGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepGraph.hpp">
