@@ -1,12 +1,12 @@
 
-systemInterface.x: systemInterface_main.o systemInterface.o
-	g++ -std=c++17 systemInterface_main.o systemInterface.o -o systemInterface.x
+make.x: main.o Reader.o Graph.o 
+	g++ -std=c++17 Graph.o main.o Reader.o -o make.x
 
-systemInterface.o: systemInterface.hpp systemInterface.cpp
-	g++ -std=c++17 -c systemInterface.cpp -o systemInterface.o
+Graph.o: Graph.hpp Graph.cpp Reader.hpp 
+	g++ -std=c++17 Graph.cpp -o Graph.o -c
 
-systemInterface_main.o: systemInterface_main.cpp systemInterface.hpp
-	g++ -std=c++17 -c systemInterface_main.cpp -o systemInterface_main.o
+main.o: main.cpp Graph.hpp
+	g++ -std=c++17 main.cpp -o main.o -c
 
-clean:
-	rm -fr systemInterface.x *.o
+Reader.o: Reader.hpp Reader.cpp
+	g++ -std=c++17 Reader.cpp -o Reader.o -c

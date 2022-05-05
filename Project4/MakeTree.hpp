@@ -13,7 +13,7 @@ public:
     void insert(GraphNode* nNode) { _root = insert(_root, nNode); }
     /// @brief goes through bst and returns the graphNode
     /// @param name 
-    /// @returns GraphNode if it already exists else returns nullptr??? 
+    /// @returns GraphNode if it already exists else returns nullptr 
     GraphNode* find(std::string name);
     /// @brief prints the tree using in-order traversal
     void print() { print(_root); }   // print the tree using in-order traversal

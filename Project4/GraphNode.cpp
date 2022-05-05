@@ -71,13 +71,9 @@ void GraphNode::isATarget(bool v){
 }
 
 int GraphNode::numDependentNodes(){
-	return _listOfDependentNodes->size()-1;
+	return _listOfDependentNodes->size();
 }
 
 void GraphNode::print(){
-	std::cout << _name << " : ";
-	for (size_t i = 0; i < _listOfDependentNodes->size(); i++) {
-		std::cout << _listOfDependentNodes->at(i) << std::endl;
-	}
-	std::cout << "          " << _command << std::endl;
+	std::cout << _name << ": " << std::endl;
 }

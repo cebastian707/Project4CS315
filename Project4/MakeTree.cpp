@@ -13,7 +13,7 @@ GraphNode* MakeTree::find(std::string name){
 		
 		}
 
-		if (temp->graphNode()->getName() > name){
+		if (temp->graphNode()->getName() < name){
 			temp = temp->right();
 		}
 

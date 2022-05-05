@@ -16,10 +16,12 @@ public:
 	/// @returns tokens of the makefile
 	Token gettoken();
 
+
 private:
 	/// @brief variables of the Tokenizer
 	std::string inputFileName;
 	std::fstream inputStream;
+	char pervious;
 };
 #endif // !Tokenizer_hpp
 

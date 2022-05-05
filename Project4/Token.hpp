@@ -43,6 +43,14 @@ public:
 
 	/// @brief prints the tokens
 	void print();
+
+	/// @brief 
+	/// @returns true if it is a colon 
+	bool iscolon();
+
+	/// @brief 
+	/// @returns true of token is a tab 
+	bool istab();
 private:
 	/// @brief variables of the token class
 	std::string _input;

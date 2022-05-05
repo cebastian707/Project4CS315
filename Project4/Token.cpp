@@ -70,3 +70,17 @@ void Token::print(){
 	}
 
 }
+
+bool Token::iscolon(){
+	if (_charcter == ':') {
+		return true;
+	}
+	return false;
+}
+
+bool Token::istab(){
+	if (_charcter == '\t') {
+		return true;
+	}
+	return false;
+}

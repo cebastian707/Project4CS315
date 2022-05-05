@@ -19,19 +19,11 @@ int main(int argc, const char* argv[]){
     }
     inputstream.close();
 
-    /*
-    Tokenizer tokenizer(argv[1]);
-    Token token = tokenizer.gettoken();
-
-    while (!token.endofile()){
-        token.print();
-        token = tokenizer.gettoken();
-    }
-    */
-
+    
     // creates a Reader and build the dependency graph using the tokens that it returns.
     DepGraph* make = new DepGraph(argv[1]);
     make->parseDepGraph();
+    make->print();
     if (make->isCyclic()) {
         std::cerr << "Input graph has cycles.\n";
         exit(1);
