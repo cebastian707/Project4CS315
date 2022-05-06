@@ -6,13 +6,10 @@ DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }
 void DepGraph::print(GraphNode* root){
 	if (root == nullptr)
 		return;
-
-
 	std::cout << root->getName() << "->"<< std::endl;
 	for (size_t i = 0; i < root->numDependentNodes(); i++) {
 		print(root->dependentNodes()->at(i));
 	}
-
 }
 
 void DepGraph::print(){
@@ -27,8 +24,6 @@ void DepGraph::parseDepGraph(){
 	
 	}
 	firstTarget = _tree->getRoot()->graphNode();
-
-
 }
 
 void DepGraph::runMake(){
@@ -93,10 +88,6 @@ void DepGraph::parserhelper(Token& target){
 		_skip = true;
 	}
 
-
-
-
-
 	//if we've already seen the target file 
 	//lets go get its dependcy files
 	else if(target_files) {
@@ -141,6 +132,14 @@ void DepGraph::parserhelper(Token& target){
 }
 
 bool DepGraph::isCyclic(GraphNode* mode){
-	return false;
+	if (mode == nullptr)
+		return false;
+
+	for (size_t i = 0; i < mode->numDependentNodes(); i++) {
+			isCyclic(mode->dependentNodes()->at(i));
+	}
+	
+	mode->onPath(true);
+
 }
 //exit(4) no colon found in makefile
