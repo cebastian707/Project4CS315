@@ -6,7 +6,7 @@ DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }
 void DepGraph::print(GraphNode* root){
 	if (root == nullptr)
 		return;
-	std::cout << root->getName() << "->"<< std::endl;
+	std::cout << root->getName() << std::endl;
 	for (size_t i = 0; i < root->numDependentNodes(); i++) {
 		print(root->dependentNodes()->at(i));
 	}
@@ -132,14 +132,23 @@ void DepGraph::parserhelper(Token& target){
 }
 
 bool DepGraph::isCyclic(GraphNode* mode){
-	if (mode == nullptr)
-		return false;
+	//check if the node onpath is set to tree then that means we would have to 
+	//already seen that node
+	if (mode->onPath())
+		return true;
 
-	for (size_t i = 0; i < mode->numDependentNodes(); i++) {
-			isCyclic(mode->dependentNodes()->at(i));
-	}
-	
+
+
+	//set the node onpath to true
 	mode->onPath(true);
 
+	//get its children
+	for (size_t i = 0; i < mode->numDependentNodes(); i++) {
+			isCyclic(mode->dependentNodes()->at(i));
+
+	}
+
+	mode->onPath(false);
+	return false;
 }
 //exit(4) no colon found in makefile
