@@ -13,7 +13,7 @@ public:
     DepGraph(std::string name);
     /// @brief prints items
     void print(GraphNode* root);
-
+  
     void print();
     /// @brief parses the makefile
     void parseDepGraph();
@@ -25,10 +25,14 @@ public:
 private:
     /// @brief parse just one token at a time
     void parserhelper(Token& parser);
+
+    void runmakehelper(GraphNode* make);
+    
     /// @brief 
     /// @param mode 
     /// @return true if graph is a cyclic 
     bool isCyclic(GraphNode* mode);
+    
     /// @brief private variables
     std::string _fileToMake, _targetToMake;
     GraphNode* firstTarget;
