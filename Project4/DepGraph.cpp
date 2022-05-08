@@ -135,18 +135,7 @@ void DepGraph::parserhelper(Token& target){
 
 }
 
-void DepGraph::runmakehelper(GraphNode* make){
-	//1.check of the node is target file??
 
-
-
-	//2.grab the children of the node
-	for (size_t i = 0; i < make->numDependentNodes(); i++) {
-		runmakehelper(make->dependentNodes()->at(i));
-	}
-
-
-}
 
 bool DepGraph::isCyclic(GraphNode* mode){
 	//check if the node onpath is set to tree then that means we would have to 
@@ -161,8 +150,13 @@ bool DepGraph::isCyclic(GraphNode* mode){
 
 	//3.recurisvly get its children
 	for (size_t i = 0; i < mode->numDependentNodes(); i++) {
-			isCyclic(mode->dependentNodes()->at(i));
+		bool iscycle = isCyclic(mode->dependentNodes()->at(i));
 
+		//5.whatever we return form the stack means two things
+		//if iscycle returns true that means we have a cycle just return that
+		//else loop through the rest of the graph
+		if (iscycle)
+			return iscycle;
 	}
 
 	//4.once we had a leaf node start setting them to false 

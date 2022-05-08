@@ -19,8 +19,7 @@
 
 */
 
-bool timestamp(const char* fname, long* time)
-{
+bool timestamp(const char* fname, long* time){
     struct stat finfo;
 
     if (stat(fname, &finfo) == 0) {

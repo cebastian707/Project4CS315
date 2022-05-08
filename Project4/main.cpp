@@ -23,7 +23,7 @@ int main(int argc, const char* argv[]){
     // creates a Reader and build the dependency graph using the tokens that it returns.
     DepGraph* make = new DepGraph(argv[1]);
     make->parseDepGraph();
-    make->print();
+    //make->print();
     if (make->isCyclic()) {
         std::cerr << "Input graph has cycles.\n";
         exit(1);
