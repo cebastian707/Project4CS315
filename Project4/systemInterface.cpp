@@ -18,7 +18,6 @@
    terms of number seconds elapsed  since January 1, 1997 (the Unix epoch!)
 
 */
-
 bool timestamp(const char* fname, long* time){
     struct stat finfo;
 
@@ -39,7 +38,6 @@ bool timestamp(const char* fname, long* time){
 //  Executes the commond 'cmnd' and returns its status.
 //  A return value of zero means that the command terminated 
 //    successfully.
-
 bool executeCommand(const char* cmnd) {
     std::cout << cmnd << std::endl;
     return 0 == system(cmnd);

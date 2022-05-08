@@ -6,6 +6,7 @@
 #include "MakeTree.hpp"
 #include"Tokenizer.hpp"
 #include"GraphNode.hpp"
+#include"systemInterface.hpp"
 class DepGraph {
 public:
     /// @brief constructor for the class
@@ -23,6 +24,7 @@ public:
     /// @returns true if graph is a cyclic 
     bool isCyclic();
 private:
+   
     /// @brief parse just one token at a time
     void parserhelper(Token& parser);
 
@@ -34,7 +36,8 @@ private:
     bool isCyclic(GraphNode* mode);
     
     /// @brief private variables
-    std::string _fileToMake, _targetToMake;
+    std::string _fileToMake, _targetToMake , _command;
+    long* time;
     GraphNode* firstTarget;
     MakeTree* _tree;  // MakeTree implements a binary-search tree similar to BinSearchTree
     Tokenizer tokenizer;

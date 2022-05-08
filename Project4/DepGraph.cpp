@@ -1,6 +1,6 @@
 #include "DepGraph.hpp"
 
-DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }, firstTarget{ nullptr }, _skip{false}{
+DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }, firstTarget{ nullptr }, _skip{ false }, time{new long}{
 }
 
 void DepGraph::print(GraphNode* root){
@@ -30,6 +30,7 @@ void DepGraph::runMake(){
 	//traverse the graph and check the timestamp on the 
 	//node and compare it with the target files the children nodes get the biggest
 	//timestamp
+	runmakehelper(firstTarget);
 
 }
 
@@ -95,7 +96,7 @@ void DepGraph::parserhelper(Token& target){
 	//if we've already seen the target file 
 	//lets go get its dependcy files
 	else if(target_files) {
-
+		target_files->isATarget(true);
 		//now lets check for a colon
 		target = tokenizer.gettoken();
 
@@ -133,6 +134,42 @@ void DepGraph::parserhelper(Token& target){
 		_skip = true;
 	}
 
+}
+
+void DepGraph::runmakehelper(GraphNode* make){
+	//get the nodes children
+	for (size_t i = 0; i < make->numDependentNodes(); i++) {
+		runmakehelper(make->dependentNodes()->at(i));
+	}
+
+	//if time stamp zero then we know we need to make a timestamp
+	if (make->getTimestamp() == 0){
+		//check if the timestamp coming in 
+		if (make->isATarget()){
+			_targetToMake = make->getName();
+			timestamp(_targetToMake.c_str(), time);
+			
+			//if time come back as it doesnt exist run the command
+			if (*time == -1){
+				_command = make->getCommand();
+				executeCommand(_command.c_str());
+				timestamp(_targetToMake.c_str(), time);
+			}
+
+
+		}
+		//
+		else {
+			_fileToMake = make->getName();
+			timestamp(_fileToMake.c_str(), time);
+			make->setTimestamp(*time);
+		}
+	}
+
+	//if the file has a timestamp get the biggest one from its children and compare
+	else {
+
+	}
 }
 
 

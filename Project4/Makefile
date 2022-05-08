@@ -5,7 +5,7 @@ make.x: main.o Reader.o Graph.o
 Graph.o: Graph.hpp Graph.cpp Reader.hpp 
 	g++ -std=c++17 Graph.cpp -o Graph.o -c
 
-main.o: main.cpp Graph.hpp main.o
+main.o: main.cpp Graph.hpp 
 	g++ -std=c++17 main.cpp -o main.o -c
 
 Reader.o: Reader.hpp Reader.cpp
