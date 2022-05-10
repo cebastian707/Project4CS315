@@ -1,7 +1,8 @@
 #include "DepGraph.hpp"
 
-DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }, firstTarget{ nullptr }, _skip{ false }, time{new long}{
+DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }, firstTarget{ nullptr }, _skip{ false }, time{ new long }, biggest_time{ 0 }{
 }
+
 
 void DepGraph::print(GraphNode* root){
 	if (root == nullptr)
@@ -137,39 +138,39 @@ void DepGraph::parserhelper(Token& target){
 }
 
 void DepGraph::runmakehelper(GraphNode* make){
-	//get the nodes children
-	for (size_t i = 0; i < make->numDependentNodes(); i++) {
-		runmakehelper(make->dependentNodes()->at(i));
-	}
+		//started setting the timestamp of the nodes
+		_fileToMake = make->getName();
+		timestamp(_fileToMake.c_str(), time);
+		//set the timestamp
+		make->setTimestamp(*time);
 
-	//if time stamp zero then we know we need to make a timestamp
-	if (make->getTimestamp() == 0){
-		//check if the timestamp coming in 
-		if (make->isATarget()){
-			_targetToMake = make->getName();
-			timestamp(_targetToMake.c_str(), time);
-			
-			//if time come back as it doesnt exist run the command
-			if (*time == -1){
+		//get the nodes children
+		for (size_t i = 0; i < make->numDependentNodes(); i++) {
+			runmakehelper(make->dependentNodes()->at(i));
+		}
+
+
+		//check if the current node is a target
+		if (make->isATarget()) {
+			if (biggest_time > make->getTimestamp()) {
+				//get the command and set its timestamp
 				_command = make->getCommand();
+				//call excute command to run the command
 				executeCommand(_command.c_str());
+				std::cout << _command << std::endl;
+				//know set its timestamp
+				_targetToMake = make->getName();
 				timestamp(_targetToMake.c_str(), time);
+				make->setTimestamp(*time);
 			}
-
-
 		}
-		//
-		else {
-			_fileToMake = make->getName();
-			timestamp(_fileToMake.c_str(), time);
-			make->setTimestamp(*time);
+		
+		//if its not a target node its a leaf node
+		//start getting the biggest node and keep track of that
+		else{
+			biggest_time = std::max(biggest_time, make->getTimestamp());
 		}
-	}
-
-	//if the file has a timestamp get the biggest one from its children and compare
-	else {
-
-	}
+		
 }
 
 
@@ -196,7 +197,7 @@ bool DepGraph::isCyclic(GraphNode* mode){
 			return iscycle;
 	}
 
-	//4.once we had a leaf node start setting them to false 
+	//4.once we had a leaf node start setting them(nodes) to false 
 	mode->onPath(false);
 	return false;
 }

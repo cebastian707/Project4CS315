@@ -69,6 +69,10 @@ Token Tokenizer::gettoken() {
 		token.eof();
 		return token;
 	}
+		
+		Token token;
+		token.eof();
+		return token;
 
 }
 //exit(4) file not open

@@ -12,9 +12,7 @@ public:
     /// @brief constructor for the class
     /// @param name 
     DepGraph(std::string name);
-    /// @brief prints items
-    void print(GraphNode* root);
-  
+    /// @brief overloaded function
     void print();
     /// @brief parses the makefile
     void parseDepGraph();
@@ -24,10 +22,14 @@ public:
     /// @returns true if graph is a cyclic 
     bool isCyclic();
 private:
+    /// @brief prints items
+    void print(GraphNode* root);
    
     /// @brief parse just one token at a time
     void parserhelper(Token& parser);
 
+    /// @brief helper function
+    /// @param make 
     void runmakehelper(GraphNode* make);
     
     /// @brief 
@@ -38,6 +40,7 @@ private:
     /// @brief private variables
     std::string _fileToMake, _targetToMake , _command;
     long* time;
+    int biggest_time;
     GraphNode* firstTarget;
     MakeTree* _tree;  // MakeTree implements a binary-search tree similar to BinSearchTree
     Tokenizer tokenizer;
