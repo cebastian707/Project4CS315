@@ -138,39 +138,49 @@ void DepGraph::parserhelper(Token& target){
 }
 
 void DepGraph::runmakehelper(GraphNode* make){
-		//started setting the timestamp of the nodes
-		_fileToMake = make->getName();
-		timestamp(_fileToMake.c_str(), time);
-		//set the timestamp
+	for (auto i : *make->dependentNodes()){
+		runmakehelper(i);
+	}
+
+	//set the timestamp
+	if (!make->isATarget()) {
+		_targetToMake = make->getName();
+		timestamp(_targetToMake.c_str(), time);
+		make->setTimestamp(*time);
+		//get the biggest timestamp
+		 biggest_time = std::max(biggest_time, make->getTimestamp());
+	}
+
+
+
+	//
+	else {
+		_targetToMake = make->getName();
+		timestamp(_targetToMake.c_str(), time);
 		make->setTimestamp(*time);
 
-		//get the nodes children
-		for (size_t i = 0; i < make->numDependentNodes(); i++) {
-			runmakehelper(make->dependentNodes()->at(i));
+		//if timestamp is -1 go ahead and make it
+		if (make->getTimestamp() == -1){
+			//exceute the command
+			_command = make->getCommand();
+			executeCommand(_command.c_str());
+			timestamp(_targetToMake.c_str(),time);
 		}
 
 
-		//check if the current node is a target
-		if (make->isATarget()) {
-			if (biggest_time > make->getTimestamp()) {
-				//get the command and set its timestamp
-				_command = make->getCommand();
-				//call excute command to run the command
-				executeCommand(_command.c_str());
-				std::cout << _command << std::endl;
-				//know set its timestamp
-				_targetToMake = make->getName();
-				timestamp(_targetToMake.c_str(), time);
-				make->setTimestamp(*time);
-			}
+		//know check the timestamp
+		else if (biggest_time > make->getTimestamp()){
+						//exceute the command
+			_command = make->getCommand();
+			executeCommand(_command.c_str());
+			timestamp(_targetToMake.c_str(),time);
 		}
-		
-		//if its not a target node its a leaf node
-		//start getting the biggest node and keep track of that
-		else{
-			biggest_time = std::max(biggest_time, make->getTimestamp());
-		}
-		
+
+
+	}
+
+
+
 }
 
 

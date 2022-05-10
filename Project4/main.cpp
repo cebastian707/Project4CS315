@@ -22,11 +22,15 @@ int main(int argc, const char* argv[]){
     // creates a Reader and build the dependency graph using the tokens that it returns.
     DepGraph* make = new DepGraph(argv[1]);
     make->parseDepGraph();
-    //make->print();
+    make->print();
     if (make->isCyclic()) {
-        std::cerr << "Input graph has cycles.\n";
+        std::cout << "Input graph has cycles.\n";
         exit(1);
     }
+    else{
+        std::cout << "Input Graph has no cycles.\n";
+    }
+
     make->runMake();
    
     return 0;
