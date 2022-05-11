@@ -1,15 +1,17 @@
 #include "DepGraph.hpp"
+#include<iostream>
 
-DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }, firstTarget{ nullptr }, _skip{ false }, time{ new long }, biggest_time{ 0 }{
+DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }, firstTarget{ nullptr }, _skip{ false }, time{ new long }, biggest_time{ 0 }, _isupdated{ true }{
 }
 
 
 void DepGraph::print(GraphNode* root){
 	if (root == nullptr)
 		return;
-	std::cout << root->getName() << std::endl;
-	for (size_t i = 0; i < root->numDependentNodes(); i++) {
-		print(root->dependentNodes()->at(i));
+	root->print();
+	std::cout << std::endl;
+	for (size_t i = 0; i < root->numDependentNodes(); i++){
+		root->dependentNodes()->at(i)->print();
 	}
 }
 
@@ -32,7 +34,10 @@ void DepGraph::runMake(){
 	//node and compare it with the target files the children nodes get the biggest
 	//timestamp
 	runmakehelper(firstTarget);
-
+	if (_isupdated){
+		std::cout << "makefile is up to date " << firstTarget->getName() << std::endl;
+	}
+	
 }
 
 bool DepGraph::isCyclic(){
@@ -138,6 +143,11 @@ void DepGraph::parserhelper(Token& target){
 }
 
 void DepGraph::runmakehelper(GraphNode* make){
+	
+	
+	
+	
+	
 	for (auto i : *make->dependentNodes()){
 		runmakehelper(i);
 	}
@@ -153,7 +163,7 @@ void DepGraph::runmakehelper(GraphNode* make){
 
 
 
-	//
+	//check if the current file is a target
 	else {
 		_targetToMake = make->getName();
 		timestamp(_targetToMake.c_str(), time);
@@ -165,22 +175,29 @@ void DepGraph::runmakehelper(GraphNode* make){
 			_command = make->getCommand();
 			executeCommand(_command.c_str());
 			timestamp(_targetToMake.c_str(),time);
+			make->setTimestamp(*time);
+			make->wasMade(true);
+			_isupdated = false;
 		}
 
-
-		//know check the timestamp
+		//know check the timestamp and check if the biggest timestamp
+		//is bigger then the depended node
 		else if (biggest_time > make->getTimestamp()){
-						//exceute the command
+			//exceute the command
 			_command = make->getCommand();
 			executeCommand(_command.c_str());
 			timestamp(_targetToMake.c_str(),time);
+			make->wasMade(true);
+			_isupdated = false;
 		}
 
 
+
+
+		//reset biggest timestamp to zero 
+		//if not the entire commands will run again when we only edited one file
+		biggest_time = 0;
 	}
-
-
-
 }
 
 

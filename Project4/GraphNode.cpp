@@ -1,6 +1,5 @@
 #include"GraphNode.hpp"
 
-
 GraphNode::GraphNode(std::string name){
 	_name = name;
 	_command = "";
@@ -75,5 +74,11 @@ int GraphNode::numDependentNodes(){
 }
 
 void GraphNode::print(){
-	std::cout << _name << ": " << std::endl;
+	std::cout << _name << ": ";
+
+	for (auto& i: *_listOfDependentNodes){
+		std::cout << " " << i->getName();
+	}
+	std::cout << std::endl;
+	std::cout << "      " << _command << std::endl;
 }

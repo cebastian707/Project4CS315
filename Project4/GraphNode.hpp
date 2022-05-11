@@ -60,7 +60,7 @@ public:
     /// @returns the number of nodes in the vector of  _listOfDependentNodes
     int numDependentNodes();
     /// @brief prints something _name ???
-    void print();
+    void print();      
 private:
     /// @brief private variables of the class GraphNode
     std::string _name, _command;

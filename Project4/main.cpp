@@ -5,7 +5,7 @@
 
 int main(int argc, const char* argv[]){
     std::ifstream inputstream;
-
+                        
     if (argc != 2) {
         std::cout << "usage: " << argv[1] << " name-of-a-makefile\n";
         exit(1);
@@ -22,15 +22,14 @@ int main(int argc, const char* argv[]){
     // creates a Reader and build the dependency graph using the tokens that it returns.
     DepGraph* make = new DepGraph(argv[1]);
     make->parseDepGraph();
-    make->print();
+
     if (make->isCyclic()) {
         std::cout << "Input graph has cycles.\n";
         exit(1);
     }
-    else{
-        std::cout << "Input Graph has no cycles.\n";
-    }
 
+    
+    //make->print();
     make->runMake();
    
     return 0;

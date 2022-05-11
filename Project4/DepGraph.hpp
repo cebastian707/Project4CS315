@@ -34,9 +34,10 @@ private:
     
     /// @brief 
     /// @param mode 
-    /// @return true if graph is a cyclic 
+    /// @return true if graph is has cyclic 
     bool isCyclic(GraphNode* mode);
-    
+
+
     /// @brief private variables
     std::string _fileToMake, _targetToMake , _command;
     long* time;
@@ -44,6 +45,6 @@ private:
     GraphNode* firstTarget;
     MakeTree* _tree;  // MakeTree implements a binary-search tree similar to BinSearchTree
     Tokenizer tokenizer;
-    bool _skip;
+    bool _skip ,_isupdated;
 };
 #endif
