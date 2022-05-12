@@ -1,0 +1,31 @@
+
+daily-meals: breakfast lunch dinner salad   
+	touch daily-meals
+
+breakfast: cereal milk berries
+	touch breakfast
+
+cereal: wheat nuts
+	touch cereal
+
+lunch: bread bacon lettuce tomatoes fruit-salad  
+	touch lunch
+
+bread: wheat water
+	touch bread
+
+fruit-salad: berries melon cantaloupe 
+	touch fruit-salad
+
+garden-salad: lettuce endive tomatoes radishes carrots cucumbers   
+	touch garden-salad
+
+salad: fruit-salad garden-salad
+	touch salad
+
+dinner: salmon oven bread potatoes wine water garden-salad
+	touch dinner
+
+wheat: sun soil water  
+	touch wheat
+

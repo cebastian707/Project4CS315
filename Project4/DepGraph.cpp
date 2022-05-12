@@ -1,7 +1,7 @@
 #include "DepGraph.hpp"
 #include<iostream>
 
-DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }, firstTarget{ nullptr }, _skip{ false }, time{ new long }, biggest_time{ 0 }, _isupdated{ true }{
+DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }, firstTarget{ nullptr }, _skip{ false }, time{ new long },_isupdated{ true }{
 }
 
 
@@ -13,6 +13,12 @@ void DepGraph::print(GraphNode* root){
 	for (size_t i = 0; i < root->numDependentNodes(); i++){
 		root->dependentNodes()->at(i)->print();
 	}
+	/*
+	std::cout << root->getName() << "->" << std::endl;
+	for (size_t i = 0; i < root->numDependentNodes(); i++) {
+		print(root->dependentNodes()->at(i));
+	}
+	*/
 }
 
 void DepGraph::print(){
@@ -30,14 +36,13 @@ void DepGraph::parseDepGraph(){
 }
 
 void DepGraph::runMake(){
-	//traverse the graph and check the timestamp on the 
-	//node and compare it with the target files the children nodes get the biggest
-	//timestamp
 	runmakehelper(firstTarget);
+
+	//this variable if ever changed form true to false
+	//means only one thing that the make file is not up to date
 	if (_isupdated){
 		std::cout << "makefile is up to date " << firstTarget->getName() << std::endl;
 	}
-	
 }
 
 bool DepGraph::isCyclic(){
@@ -141,65 +146,60 @@ void DepGraph::parserhelper(Token& target){
 	}
 
 }
-
+                                                                  
 void DepGraph::runmakehelper(GraphNode* make){
+	//1.check if the node exists by searching through the tree
+	GraphNode* doesnt_exist = _tree->find(make->getName());
 	
+	//2.if this is a null pointer tell the user 
+	//the file he provided doesnt exist 
+	if (!doesnt_exist){
+		std::cout << "The file does not exist " << make->getName() << std::endl;
+		exit(4);
+	}
 	
+	    
+	//3.set the timestamp for every node
+	_targetToMake = make->getName();
+	timestamp(_targetToMake.c_str(), time);
+	make->setTimestamp(*time);
+
+	//4.if not a target start setting the time stamp of the leaf nodes
+	if (!make->isATarget()){
+		//5.then we know its a leaf node and exist 
+		timestamp(_targetToMake.c_str(), time);
+		make->setTimestamp(*time);
+	}
 	
-	
-	
-	for (auto i : *make->dependentNodes()){
-		runmakehelper(i);
+
+	//6.loop through the graph recursivly 
+	for (size_t i = 0; i < make->numDependentNodes(); i++) {
+		runmakehelper(make->dependentNodes()->at(i));
 	}
 
-	//set the timestamp
-	if (!make->isATarget()) {
+	//7.check if node is a target
+	if (make->isATarget()) {
+		//8.set the timestamp
 		_targetToMake = make->getName();
 		timestamp(_targetToMake.c_str(), time);
 		make->setTimestamp(*time);
-		//get the biggest timestamp
-		 biggest_time = std::max(biggest_time, make->getTimestamp());
-	}
 
-
-
-	//check if the current file is a target
-	else {
-		_targetToMake = make->getName();
-		timestamp(_targetToMake.c_str(), time);
-		make->setTimestamp(*time);
-
-		//if timestamp is -1 go ahead and make it
-		if (make->getTimestamp() == -1){
-			//exceute the command
-			_command = make->getCommand();
-			executeCommand(_command.c_str());
-			timestamp(_targetToMake.c_str(),time);
-			make->setTimestamp(*time);
-			make->wasMade(true);
-			_isupdated = false;
+		//9.loop through its depended notes and 
+		//compare if any of the depended nodes are bigger
+		//run the command bottoms up on the way coming back
+		for (size_t i = 0; i < make->numDependentNodes(); i++) {
+				if (make->getTimestamp() < make->dependentNodes()->at(i)->getTimestamp()){
+					_command = make->getCommand();
+					executeCommand(_command.c_str());
+					timestamp(_targetToMake.c_str(), time);
+					make->setTimestamp(*time);
+					_isupdated = false;
+				}
 		}
 
-		//know check the timestamp and check if the biggest timestamp
-		//is bigger then the depended node
-		else if (biggest_time > make->getTimestamp()){
-			//exceute the command
-			_command = make->getCommand();
-			executeCommand(_command.c_str());
-			timestamp(_targetToMake.c_str(),time);
-			make->wasMade(true);
-			_isupdated = false;
-		}
-
-
-
-
-		//reset biggest timestamp to zero 
-		//if not the entire commands will run again when we only edited one file
-		biggest_time = 0;
 	}
+
 }
-
 
 
 bool DepGraph::isCyclic(GraphNode* mode){
@@ -228,4 +228,4 @@ bool DepGraph::isCyclic(GraphNode* mode){
 	mode->onPath(false);
 	return false;
 }
-//exit(4) no colon found in makefile
+//exit(4) no colon found in makefile or file doesnt exist

@@ -5,7 +5,7 @@
 
 int main(int argc, const char* argv[]){
     std::ifstream inputstream;
-                        
+                            
     if (argc != 2) {
         std::cout << "usage: " << argv[1] << " name-of-a-makefile\n";
         exit(1);
@@ -27,11 +27,7 @@ int main(int argc, const char* argv[]){
         std::cout << "Input graph has cycles.\n";
         exit(1);
     }
-
-    
-    //make->print();
     make->runMake();
-   
     return 0;
 }
 //exit(2) couldnt open file
