@@ -4,6 +4,20 @@
 DepGraph::DepGraph(std::string name) :tokenizer{ name }, _tree{ new MakeTree() }, firstTarget{ nullptr }, _skip{ false }, time{ new long },_isupdated{ true }{
 }
 
+void DepGraph::itervaleycheckdepentednotes(GraphNode* make){
+	//1.loop through its depended notes and 
+	//compare if any of the depended nodes are bigger
+	//run the command bottoms up on the way coming back
+	for (size_t i = 0; i < make->numDependentNodes(); i++) {
+		if (make->getTimestamp() < make->dependentNodes()->at(i)->getTimestamp()) {
+			_command = make->getCommand();
+			executeCommand(_command.c_str());
+			timestamp(_targetToMake.c_str(), time);
+			make->setTimestamp(*time);
+			_isupdated = false;
+		}
+	}
+}
 
 void DepGraph::print(GraphNode* root){
 	if (root == nullptr)
@@ -148,59 +162,27 @@ void DepGraph::parserhelper(Token& target){
 }
                                                                   
 void DepGraph::runmakehelper(GraphNode* make){
-	//1.check if the node exists by searching through the tree
-	GraphNode* doesnt_exist = _tree->find(make->getName());
-	
-	//2.if this is a null pointer tell the user 
-	//the file he provided doesnt exist 
-	if (!doesnt_exist){
-		std::cout << "The file does not exist " << make->getName() << std::endl;
-		exit(4);
-	}
-	
-	    
-	//3.set the timestamp for every node
+	//1.set the timestamp for every node
 	_targetToMake = make->getName();
 	timestamp(_targetToMake.c_str(), time);
 	make->setTimestamp(*time);
-
-	//4.if not a target start setting the time stamp of the leaf nodes
-	if (!make->isATarget()){
-		//5.then we know its a leaf node and exist 
-		timestamp(_targetToMake.c_str(), time);
-		make->setTimestamp(*time);
-	}
-	
-
-	//6.loop through the graph recursivly 
+	     
+	//2.loop through the graph recursivly 
 	for (size_t i = 0; i < make->numDependentNodes(); i++) {
 		runmakehelper(make->dependentNodes()->at(i));
 	}
 
-	//7.check if node is a target
+	//3.check if node is a target
 	if (make->isATarget()) {
-		//8.set the timestamp
+		//4.set the timestamp
 		_targetToMake = make->getName();
 		timestamp(_targetToMake.c_str(), time);
 		make->setTimestamp(*time);
-
-		//9.loop through its depended notes and 
-		//compare if any of the depended nodes are bigger
-		//run the command bottoms up on the way coming back
-		for (size_t i = 0; i < make->numDependentNodes(); i++) {
-				if (make->getTimestamp() < make->dependentNodes()->at(i)->getTimestamp()){
-					_command = make->getCommand();
-					executeCommand(_command.c_str());
-					timestamp(_targetToMake.c_str(), time);
-					make->setTimestamp(*time);
-					_isupdated = false;
-				}
-		}
-
+		//5.call this function to check the depended notes 
+		//if they are bigger 
+		itervaleycheckdepentednotes(make);
 	}
-
 }
-
 
 bool DepGraph::isCyclic(GraphNode* mode){
 	//check if the node onpath is set to tree then that means we would have to 

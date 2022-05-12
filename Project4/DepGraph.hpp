@@ -22,6 +22,14 @@ public:
     /// @returns true if graph is a cyclic 
     bool isCyclic();
 private:
+
+    /// @brief itervaley loops through the 
+    /// depented children and checks if the depended nodes 
+    /// has a bigger timestamp then its children 
+    /// @param make 
+    void itervaleycheckdepentednotes(GraphNode* make);
+
+
     /// @brief prints items
     void print(GraphNode* root);
    
